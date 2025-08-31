@@ -32,7 +32,40 @@ class Graph:
         self._root = root
 
     def dfs(self) -> list[Node]:
-        raise NotImplementedError
+        #raise NotImplementedError
+        visited = []
+
+        self._dfs(self._root, visited)
+
+        return visited
 
     def bfs(self) -> list[Node]:
-        raise NotImplementedError
+        #raise NotImplementedError
+        visited = []  # Посещена ли вершина?
+        Q = []  # Очередь
+        BFS = []
+
+        self._bfs(self._root, Q, BFS, visited)
+
+        return visited
+
+    def _dfs(self, v, visited):
+
+        if v in visited:
+            return
+        visited.append(v)
+        for i in v.outbound:
+            if not i in visited:
+                self._dfs(i, visited)
+
+    def _bfs(self, v, Q, BFS, visited):
+
+        if v in visited:
+            return
+        visited.append(v)
+        BFS.append(v)
+        for i in v.outbound:
+            if not i in visited:
+                Q.append(i)
+        while Q:
+            self._bfs(Q.pop(0), Q, BFS, visited)
